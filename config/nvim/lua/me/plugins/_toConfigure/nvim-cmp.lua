@@ -13,11 +13,6 @@ return {
 		local luasnip = require("luasnip")
 		local lspkind = require("lspkind")
 
-		require("copilot").setup({
-			suggestion = { enabled = true },
-			panel = { enabled = true },
-		})
-
 		cmp.setup({
 			completion = {
 				completeopt = "menu,menuone,preview,noselect",
@@ -44,7 +39,6 @@ return {
 			sources = cmp.config.sources({
 				{ name = "luasnip" }, -- snippets
 				{ name = "nvim_lsp" },
-				{ name = "copilot" },
 				-- { name = "buffer" }, -- text within current buffer
 				{ name = "path" }, -- file system paths
 			}),
@@ -54,7 +48,6 @@ return {
 					maxwidth = 50,
 					ellipsis_char = "...",
 					mode = "symbol",
-					symbol_map = { Copilot = "" },
 				}),
 			},
 		})

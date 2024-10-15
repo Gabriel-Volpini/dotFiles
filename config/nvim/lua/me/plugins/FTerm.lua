@@ -13,14 +13,6 @@ return {
 	end,
 	keys = {
 		{
-			"<leader>gg",
-			function()
-				local term = require("FTerm.terminal")
-				local lazy = term:new():setup({ cmd = "lazygit" })
-				lazy:toggle()
-			end,
-		},
-		{
 			"<C-t>",
 			"<cmd>lua require('FTerm').toggle()<CR>",
 		},
