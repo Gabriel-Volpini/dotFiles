@@ -8,15 +8,18 @@ export const render = ({ output }) => {
 
     return (
         <div className={centralizedContainer}>
-            <div className={box}>
-                <span className={dayStyle}>{day}</span>
-                <span className={monthStyle}>{month}</span>
+            <div className={container}>
+                <div className={box}>
+                    <span className={dayStyle}>{day}</span>
+                    <span className={monthStyle}>{month}</span>
+                </div>
             </div>
         </div>
     )
 }
 
 const centralizedContainer = css`
+    box-sizing: content-box;
     @font-face {
         font-family: "Antikor";
         src: url("Antikor.ttf");
@@ -32,6 +35,11 @@ const centralizedContainer = css`
     height: 80%;
 `
 
+const container = css`
+    width:100%;
+    height:100%;
+    position:relative;
+`
 const box = css`
     background: #181825;
     //opacity:0.8;
@@ -41,10 +49,16 @@ const box = css`
     align-items: center;
     justify-content: center;
 
-    position:fixed;
-    padding:18px 32px;
+    position:absolute;
+    top:0;
+    left:0;
 
-    border-radius: 20%;
+    height:80px;
+    width:80px;
+    padding:18px;
+    overflow:hidden;
+
+    border-radius: 20px;
     border: 5px solid #b4befe;
 `
 

@@ -11,10 +11,7 @@ export const render = ({ output }) => {
 
     return (
         <div className={centralizedContainer}>
-            <div className={box}>
-                <span className="day">{day}</span>
-                <span className="month">{month}</span>
-            </div>
+            <div className={container}></div>
         </div>
     )
 }
@@ -32,9 +29,16 @@ const centralizedContainer = css`
     left: 50%;
     transform: translate(-50%, -50%);
 
-    //background: rgba(255, 0, 0, 0.7);
     width: 60%;
     height: 80%;
+`
+
+const container = css`
+    background: rgba(255, 0, 0, 0.7);
+    opacity:0.5;
+    width:100%;
+    height:100%;
+    position:relative;
 `
 
 const box = css`
