@@ -8,11 +8,9 @@ export const render = ({ output }) => {
 
     return (
         <div className={centralizedContainer}>
-            <div className={container}>
-                <div className={box}>
-                    <span className={dayStyle}>{day}</span>
-                    <span className={monthStyle}>{month}</span>
-                </div>
+            <div className={box}>
+                <span className={dayStyle}>{day}</span>
+                <span className={monthStyle}>{month}</span>
             </div>
         </div>
     )
@@ -25,39 +23,32 @@ const centralizedContainer = css`
         src: url("Antikor.ttf");
     }
     font-family: "Antikor";
-
+    
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    
     width: 60%;
     height: 80%;
 `
 
-const container = css`
-    width:100%;
-    height:100%;
-    position:relative;
-`
 const box = css`
     background: #181825;
-    //opacity:0.8;
-
+    
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    
+    height: 116px;
+    width: 116px;
+    overflow:hidden;
+    
     position:absolute;
     top:0;
     left:0;
-
-    height:80px;
-    width:80px;
-    padding:18px;
-    overflow:hidden;
-
+    
     border-top-left-radius: 40px;
 `
 
