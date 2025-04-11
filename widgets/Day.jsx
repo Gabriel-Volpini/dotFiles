@@ -58,8 +58,7 @@ const box = css`
     padding:18px;
     overflow:hidden;
 
-    border-radius: 20px;
-    border: 5px solid #b4befe;
+    border-top-left-radius: 40px;
 `
 
 const dayStyle = css`

@@ -44,7 +44,7 @@ export const render = ({ output }) => {
             <div className={centralizedContainer}>
                 <div className={container}>
                     <div className={box}>
-                        <span className={rawStyle}>DEU RUIM</span>
+                        <span className={rawStyle}>Error :c</span>
                     </div>
                 </div>
             </div>
@@ -89,14 +89,11 @@ gap:10px;
 
 position:absolute;
 top:0;
-left: 138px;
+left: 124px;
 
 height:80px;
 padding:18px;
 overflow:hidden;
-
-border-radius: 20px;
-border: 5px solid #b4befe;
 `
 
 const tempStyle = css`
