@@ -97,7 +97,7 @@ const tempStyle = css`
 `
 const rawStyle = css`
     font-size: 18px;
-    color:#f5e0dc;
+    color:#cdd6f4;
 `
 
 const WeatherIcons = {

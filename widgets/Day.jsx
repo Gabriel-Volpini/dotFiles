@@ -58,5 +58,5 @@ const dayStyle = css`
 `
 const monthStyle = css`
     font-size:18px;
-    color:#f5e0dc;
+    color:#cdd6f4;
 `

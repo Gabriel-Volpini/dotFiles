@@ -2,7 +2,7 @@ import { css } from "uebersicht"
 
 export const command = `date "+%A|%H:%M"`; // separa dia e hora com um pipe
 
-export const refreshFrequency = 10 * 60 * 1000; // 10 minutos
+export const refreshFrequency = 60 * 1000; // 10 minutos
 
 export const render = ({ output }) => {
     const [dia, hora] = output.trim().split("|");
@@ -67,5 +67,5 @@ const dataWrapper = css`
 `
 const rawStyle = css`
     font-size: 18px;
-    color:#f5e0dc;
+    color:#cdd6f4;
 `

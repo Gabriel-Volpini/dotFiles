@@ -4,6 +4,7 @@ export const command = "bash ./scripts/PcStatus.sh";
 
 export const refreshFrequency = 60 * 1000;
 export const render = ({ output }) => {
+    if (!output) return null
     const { ram, volume, bateria, cpu } = JSON.parse(output)
 
     return (
@@ -47,8 +48,10 @@ const box = css`
     overflow:hidden;
     
     position:absolute;
-    top: calc(116px * 2 + 16px);
+    top: calc(116px * 3 + 24px);
     left:0;
+
+    border-bottom-left-radius: 40px;
 `
 
 const Item = css`
