@@ -63,6 +63,7 @@ const centralizedContainer = css`
     
     width: 60%;
     height: 80%;
+    pointer-events: none;
 `
 
 const box = css`
