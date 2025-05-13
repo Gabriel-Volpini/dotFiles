@@ -55,3 +55,6 @@ vim.api.nvim_set_keymap("n", "<A-h>", "<C-w>h", { noremap = true })
 vim.api.nvim_set_keymap("n", "<A-j>", "<C-w>j", { noremap = true })
 vim.api.nvim_set_keymap("n", "<A-k>", "<C-w>k", { noremap = true })
 vim.api.nvim_set_keymap("n", "<A-l>", "<C-w>l", { noremap = true })
+
+--Buffer
+vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>b#<CR>", { noremap = true })
