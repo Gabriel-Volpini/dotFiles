@@ -6,7 +6,22 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 
--- config.font = wezterm.font("CaskaydiaMono Nerd Font Mono")
+config.font = wezterm.font("CaskaydiaCove Nerd Font Mono")
+config.font_rules = {
+	{
+		intensity = "Bold",
+		font = wezterm.font("CaskaydiaCove Nerd Font Mono", { weight = "Bold" }),
+	},
+	{
+		italic = true,
+		font = wezterm.font("CaskaydiaCove Nerd Font Mono", { italic = true }),
+	},
+	{
+		italic = true,
+		intensity = "Bold",
+		font = wezterm.font("CaskaydiaCove Nerd Font Mono", { italic = true, weight = "Bold" }),
+	},
+}
 
 config.font_size = 19
 
