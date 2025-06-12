@@ -42,7 +42,7 @@ config.colors = {
 }
 
 config.window_background_opacity = 0.4
-config.macos_window_background_blur = 10
+config.macos_window_background_blur = 15
 
 -- and finally, return the configuration to wezterm
 return config
