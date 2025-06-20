@@ -82,7 +82,7 @@ return {
             desc = "Find existing buffers",
         },
         {
-            "<leader>/",
+            "<leader>f/",
             function() require("fzf-lua").lgrep_curbuf() end,
             desc = "Live grep the current buffer",
         },
