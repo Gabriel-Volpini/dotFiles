@@ -1,5 +1,4 @@
 return {
-	{
 		"catppuccin/nvim",
 		lazy = false,
 		name = "catppuccin",
@@ -39,19 +38,5 @@ return {
 
 			-- setup must be called before loading
 			vim.cmd.colorscheme("catppuccin")
-		end,
-	},
-    {
-	"rebelot/kanagawa.nvim",
-	config=function() 
-		require('kanagawa').setup({
-			compile=true,
-			transparent=true,
-		});
-		-- vim.cmd("colorscheme kanagawa");
-	end,
-	build = function()
-		-- vim.cmd("KanagawaCompile");
-	end,
-}
+		end
 }
