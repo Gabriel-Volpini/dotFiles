@@ -6,6 +6,7 @@ return {
             files = {
                 cwd_prompt_shorten_val = 12,
                 winopts = {
+                    format = "path",
                     preview = { layout = "vertical" },
                 },
             },
