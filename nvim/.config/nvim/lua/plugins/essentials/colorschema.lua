@@ -13,7 +13,7 @@ return {
 					comments = { "italic" }, -- Change the style of comments
 					conditionals = { "italic" },
 					loops = {},
-					functions = {},
+					functions = { "italic" },
 					keywords = {},
 					strings = {},
 					variables = {},
@@ -41,4 +41,17 @@ return {
 			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
+    {
+	"rebelot/kanagawa.nvim",
+	config=function() 
+		require('kanagawa').setup({
+			compile=true,
+			transparent=true,
+		});
+		-- vim.cmd("colorscheme kanagawa");
+	end,
+	build = function()
+		-- vim.cmd("KanagawaCompile");
+	end,
+}
 }
