@@ -1,28 +1,48 @@
 return {
-  "mikavilpas/yazi.nvim",
-  event = "VeryLazy",
+  "nvim-neo-tree/neo-tree.nvim",
+  branch = "v3.x",
   dependencies = {
-    "folke/snacks.nvim"
+    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+    "MunifTanjim/nui.nvim",
   },
+  lazy = false, -- neo-tree will lazily load itself
   keys = {
     {
-      "<leader>eE",
-      mode = { "n", "v" },
-      "<cmd>Yazi<cr>",
-      desc = "Open yazi at the current file",
-    },
-    {
-      -- Open in the current working directory
       "<leader>ee",
-      "<cmd>Yazi cwd<cr>",
-      desc = "Open the file manager in nvim's working directory",
+      "<cmd>Neotree reveal<CR>",
+      desc = "Open float file explorer",
     },
   },
   opts = {
-    open_for_directories = false,
-    keymaps = {
-      show_help = "<f1>",
-      send_to_quickfix_list = "<C-l>"
+    window = {
+      position = "float",
+      popup = {
+        size = {
+          height = "65%",  -- ou número absoluto
+          width = "35%",
+        },
+        position = "50%",  -- centralizado
+      },
+      mappings = {
+        ["q"] = "close_window",
+        -- ["z"] = "collapse_all_nodes"
+      },
+    },
+    default_component_configs = {
+      git_status = {
+        symbols = {
+          added     = "Added",  -- plus
+          modified  = "Modified",  -- dot
+          deleted   = "Deleted",  -- trash
+          renamed   = "Renamed",  -- arrow
+          untracked = "Untracked",  -- question
+          ignored   = "Ignored",  -- eye
+          unstaged  = "",  -- exclamation
+          staged    = "Staged",  -- check
+          conflict  = "Conflict",  -- git merge
+        },
+      },
     },
   },
 }

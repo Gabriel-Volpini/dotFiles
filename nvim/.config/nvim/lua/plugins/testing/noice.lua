@@ -1,7 +1,25 @@
-return {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    dependencies = {
-        "MunifTanjim/nui.nvim",
-    }
-}
+return {}
+-- return {
+--   "folke/noice.nvim",
+--   event = "VeryLazy",
+--   dependencies = {
+--     "MunifTanjim/nui.nvim",
+--     "nvim-lua/plenary.nvim",
+--     "rcarriga/nvim-notify",
+--   },
+--   config = function()
+--     require("noice").setup({
+--       presets = {
+--         bottom_search = true,
+--         command_palette = true,
+--         long_message_to_split = true,
+--         inc_rename = false,
+--         lsp_doc_border = false,
+--       },
+--     })
+--
+--     -- Configurar notify (opcional, mas recomendado)
+--     local notify = require("notify")
+--     vim.notify = notify
+--   end,
+-- }

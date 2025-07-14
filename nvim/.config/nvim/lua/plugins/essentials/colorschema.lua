@@ -1,42 +1,53 @@
 return {
-		"catppuccin/nvim",
-		lazy = false,
-		name = "catppuccin",
-		priority = 1000,
-		config = function()
-			require("catppuccin").setup({
-				flavour = "mocha", -- latte, frappe, macchiato, mocha
-				transparent_background = true, -- disables setting the background color.
-				show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-				styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-					comments = { "italic" }, -- Change the style of comments
-					conditionals = { "italic" },
-					loops = {},
-					functions = { "italic" },
-					keywords = {},
-					strings = {},
-					variables = {},
-					numbers = {},
-					booleans = {},
-					properties = {},
-					types = {},
-					operators = {},
-					-- miscs = {}, -- Uncomment to turn off hard-coded styles
+	"catppuccin/nvim",
+	lazy = false,
+	name = "catppuccin",
+	priority = 1000,
+	config = function()
+		require("catppuccin").setup({
+			flavour = "mocha", -- latte, frappe, macchiato, mocha
+			transparent_background = true,
+			show_end_of_buffer = false,
+			styles = {
+				comments = { "italic" },
+				conditionals = { "italic" },
+				loops = {},
+				functions = { "italic" },
+				keywords = {},
+				strings = {},
+				variables = {},
+				numbers = {},
+				booleans = {},
+				properties = {},
+				types = {},
+				operators = {},
+			},
+			integrations = {
+				cmp = true,
+				gitsigns = true,
+				nvimtree = true,
+				treesitter = true,
+				notify = false,
+				mini = {
+					enabled = true,
+					indentscope_color = "",
 				},
-				integrations = {
-					cmp = true,
-					gitsigns = true,
-					nvimtree = true,
-					treesitter = true,
-					notify = false,
-					mini = {
-						enabled = true,
-						indentscope_color = "",
-					},
-				},
-			})
+			},
+			custom_highlights = function(colors)
+				return {
+					-- Força fundo sólido em floats
+					NormalFloat = { bg = colors.mantle },
+					FloatBorder = { bg = colors.mantle, fg = colors.surface2 },
+					FloatTitle = { bg = colors.mantle, fg = colors.text },
 
-			-- setup must be called before loading
-			vim.cmd.colorscheme("catppuccin")
-		end
+                    NeoTreeNormal = { bg = colors.mantle },
+                    FzfLuaNormal = { bg = colors.mantle, fg = colors.text },
+                    FzfLuaBorder = { bg = colors.mantle, fg = colors.surface2 },
+                    -- call :Inspect to get this groups
+				}
+			end,
+		})
+
+		vim.cmd.colorscheme("catppuccin")
+	end
 }

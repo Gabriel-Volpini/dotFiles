@@ -1,0 +1,81 @@
+return {}
+-- return {
+--     {
+--         "ravitemer/mcphub.nvim",
+--         build = "npm install -g mcp-hub@latest",
+--         config = function()
+--             require("mcphub").setup()
+--         end
+--     },
+--     {
+--         "olimorris/codecompanion.nvim",
+--         dependencies = {
+--             "nvim-lua/plenary.nvim",
+--             "nvim-treesitter/nvim-treesitter",
+--             "ravitemer/mcphub.nvim",
+--         },
+--         config = function()
+--             require("codecompanion").setup({
+--                 extensions = {
+--                     mcphub = {
+--                         callback = "mcphub.extensions.codecompanion",
+--                         opts = {
+--                             show_result_in_chat = true,
+--                             make_vars = true,
+--                             make_slash_commands = true,
+--                         }
+--                     }
+--                 },
+--                 adapters = {
+--                     qwen = function()
+--                         return require("codecompanion.adapters").extend("ollama", {
+--                             name = "qwen",
+--                             parameters = {
+--                                 model = "qwen2.5-coder:14b",
+--                                 sync = true,
+--                             },
+--                         })
+--                     end,
+--                     codellama = function()
+--                         return require("codecompanion.adapters").extend("ollama", {
+--                             name = "codellama",
+--                             parameters = {
+--                                 model = "codellama:7b",
+--                                 sync = true,
+--                             },
+--                         })
+--                     end,
+--                 },
+--                 strategies = {
+--                     chat = { adapter = "qwen" },
+--                     inline = { adapter = "codellama" }
+--                 },
+--                 opts = {
+--                     log_level = "INFO",
+--                 },
+--             })
+--         end,
+--     },
+--     {
+--         "MeanderingProgrammer/render-markdown.nvim",
+--         config = function()
+--             require("render-markdown").setup({})
+--         end,
+--     },
+--     {
+--         "OXY2DEV/markview.nvim",
+--         dependencies = {
+--             "nvim-treesitter/nvim-treesitter",
+--         },
+--         config = function()
+--             require("markview").setup({})
+--         end,
+--     },
+--     {
+--         "echasnovski/mini.diff",
+--         version = "*",
+--         config = function()
+--             require("mini.diff").setup()
+--         end,
+--     },
+-- }
