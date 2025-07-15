@@ -65,5 +65,4 @@ vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>b#<CR>", { noremap = true
 --usar jq para formatar arquivo json
 vim.keymap.set("n", "gj", "<cmd>%!jq '.'<cr>", { noremap = true, silent = true })
 
---lsp error hover
-vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { silent = true, desc = "Mostrar erro no cursor" })
+

@@ -24,8 +24,8 @@ return {
                     "dockerfile",
                     "gitignore",
                 },
-                highlight = { enabled = true },
-                indent = { enabled = true },
+                highlight = { enable = true },
+                indent = { enable = true },
                 disable = { "showkeys" },  
                 incremental_selection = {
                     enable = true,
