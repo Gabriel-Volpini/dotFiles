@@ -39,7 +39,7 @@ return {
           untracked = "Untracked",  -- question
           ignored   = "Ignored",  -- eye
           unstaged  = "",  -- exclamation
-          staged    = "Staged",  -- check
+          staged    = "",  -- check
           conflict  = "Conflict",  -- git merge
         },
       },
