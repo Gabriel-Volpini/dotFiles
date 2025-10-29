@@ -224,6 +224,7 @@ return {
 			local servers = {
 				lua_ls = {},
 				marksman = {},
+				prismals = {},
 				--ts_ls = {} -- using this instead  https://github.com/pmizio/typescript-tools.nvim
 			}
 			local ensure_installed = vim.tbl_keys(servers or {})

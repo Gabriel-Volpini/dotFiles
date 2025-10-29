@@ -29,7 +29,7 @@ return {
 			lualine_a = { "mode" },
 			lualine_b = {
 				{ "branch", fmt = truncate_branch_name },
-				-- { "buffers" },
+				{ "filename" },
 			},
 			lualine_c = {
 				{ "%=", separator = "" },
