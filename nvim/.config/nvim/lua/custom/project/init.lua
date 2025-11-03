@@ -8,11 +8,15 @@ M.opts = {}
 M.currentProject = nil
 M.sessionDir = vim.fn.stdpath("data") .. "/project_sessions"
 
--- ensure session dir exists
+-- Ensure session dir exists
 vim.fn.mkdir(M.sessionDir, "p")
 
+-- ✅ Make sure sessions actually capture what we need
+-- buffers, curdir, tabpages, winsize, folds, help, globals, localoptions, terminal
+vim.o.sessionoptions = "buffers,curdir,tabpages,winsize,folds,help,globals,localoptions,terminal"
+
 function M.setup(opts)
-  M.opts = opts
+  M.opts = opts or {}
 end
 
 -----------------------------------------------------------------------
@@ -46,6 +50,42 @@ function M.getPickerItems()
 end
 
 -----------------------------------------------------------------------
+-- 🧹 Make a truly clean UI state (no E444, no leftovers)
+-----------------------------------------------------------------------
+local function clean_ui_state()
+  -- 1) Create a guaranteed safe tab + empty buffer
+  pcall(vim.cmd, "tabnew") -- new tab so we can close others
+  pcall(vim.cmd, "enew") -- empty scratch buffer in this tab
+
+  -- 2) Close ALL other tabs (keeps only the current tab)
+  pcall(vim.cmd, "silent! tabonly")
+
+  -- 3) Make sure there’s only one window in this tab
+  pcall(vim.cmd, "silent! only")
+
+  -- 4) Wipe ALL buffers except the current one
+  local cur = vim.api.nvim_get_current_buf()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= cur then
+      pcall(vim.api.nvim_buf_delete, buf, { force = true })
+    end
+  end
+
+  -- 5) Turn the current buffer into a scratch, unlisted buffer
+  --    so it won't interfere with sessions
+  pcall(function()
+    vim.bo[cur].bufhidden = "wipe"
+    vim.bo[cur].buflisted = false
+    vim.bo[cur].buftype = "nofile"
+    vim.bo[cur].swapfile = false
+    vim.cmd("file __project_switch_scratch__")
+  end)
+
+  -- 6) Final redraw to stabilize UI before sourcing
+  pcall(vim.cmd, "silent! redraw")
+end
+
+-----------------------------------------------------------------------
 -- 📦 Select and switch projects
 -----------------------------------------------------------------------
 function M.select()
@@ -76,58 +116,33 @@ function M.saveSession(name)
 end
 
 -----------------------------------------------------------------------
--- 🚪 Close all buffers
------------------------------------------------------------------------
-function M.close_all_buffers()
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted then
-      vim.api.nvim_buf_delete(buf, { force = true })
-    end
-  end
-end
-
------------------------------------------------------------------------
 -- 🔁 Handle session switching and loading
 -----------------------------------------------------------------------
 function M.handleSession(name, dir)
-  -- save current project before switching
+  -- Save current project before switching
   if M.currentProject then
     M.saveSession(M.currentProject.name)
   end
 
-  ---------------------------------------------------------------------
-  -- ✅ Safely close all windows except one
-  ---------------------------------------------------------------------
-  local wins = vim.api.nvim_list_wins()
-  if #wins > 1 then
-    for _, win in ipairs(wins) do
-      if win ~= vim.api.nvim_get_current_win() then
-        pcall(vim.api.nvim_win_close, win, true)
-      end
-    end
+  -- Clean everything (tabs, windows, buffers) but keep 1 scratch
+  clean_ui_state()
+
+  -- Change working directory to the new project
+  if dir and dir ~= "" then
+    vim.fn.chdir(vim.fn.expand(dir))
   end
 
-  ---------------------------------------------------------------------
-  -- ✅ Close all buffers (but keep one dummy buffer open)
-  ---------------------------------------------------------------------
-  vim.cmd("enew") -- create an empty scratch buffer
-  vim.cmd("only") -- make sure it’s the only window
-  M.close_all_buffers()
-
-  ---------------------------------------------------------------------
-  -- ✅ Change working directory to the new project
-  ---------------------------------------------------------------------
-  vim.fn.chdir(vim.fn.expand(dir))
-
-  ---------------------------------------------------------------------
-  -- ✅ Load or create the new session
-  ---------------------------------------------------------------------
+  -- Load or create the new session
   local session = M.sessionDir .. "/" .. name .. ".vim"
   if vim.fn.filereadable(session) == 1 then
+    -- Source the session (will open its own tabs/windows/buffers)
     vim.cmd("silent! source " .. vim.fn.fnameescape(session))
   else
+    -- If no session exists yet, create one from the (empty) state in the project dir
     vim.cmd("mksession! " .. vim.fn.fnameescape(session))
   end
+
+  require("snacks").explorer.open()
 
   vim.api.nvim_echo({
     { "Switched to ", "Normal" },

@@ -25,7 +25,7 @@ end
 -----------------------------------------------------------------------
 
 vim.keymap.set("n", "<leader>e", function()
-  require("snacks").explorer.open({ cwd = vim.fn.getcwd() })
+  require("snacks").explorer.open()
 end, { desc = "File explorerfiles (Snacks)" })
 
 vim.keymap.set("n", "<leader>ff", function()
