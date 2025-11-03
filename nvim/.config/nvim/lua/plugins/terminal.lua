@@ -73,3 +73,5 @@ end)
 vim.keymap.set("n", "<leader>tr", function()
   M.open_terminal_and_run()
 end)
+
+return {}

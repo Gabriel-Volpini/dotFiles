@@ -4,7 +4,7 @@
 -- end
 
 local M = {}
-M.opts = { open_tree = true }
+M.opts = {}
 M.currentProject = nil
 M.sessionDir = vim.fn.stdpath("data") .. "/project_sessions"
 
@@ -142,9 +142,7 @@ function M.handleSession(name, dir)
     vim.cmd("mksession! " .. vim.fn.fnameescape(session))
   end
 
-  if M.opts.open_tree then
-    require("snacks").explorer.open()
-  end
+  require("snacks").explorer.open()
 
   vim.api.nvim_echo({
     { "Switched to ", "Normal" },
@@ -159,12 +157,6 @@ end
 -----------------------------------------------------------------------
 vim.api.nvim_create_user_command("ProjectSelect", function()
   M.select()
-end, { desc = "Select a project" })
-
-vim.api.nvim_create_user_command("ProjectToggleOpenTree", function()
-  M.opts.open_tree = not M.opts.open_tree
-
-  vim.notify("Tree view value =" .. tostring(M.opts.open_tree), vim.log.levels.WARN, { title = "Project" })
 end, { desc = "Select a project" })
 
 vim.api.nvim_create_user_command("ProjectSave", function()
