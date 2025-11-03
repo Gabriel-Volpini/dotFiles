@@ -1,4 +1,6 @@
---
+-----------------------------------------------------------------------
+--  DEBUG
+-----------------------------------------------------------------------
 vim.keymap.set("n", "<leader>r", function()
   local file = vim.fn.expand("%:p")
   if file:match("%.lua$") then
@@ -9,14 +11,18 @@ vim.keymap.set("n", "<leader>r", function()
   end
 end, { desc = "Run current Lua file" })
 
---FIX: Deleting mappigns
+-----------------------------------------------------------------------
+--  DELETING mappings
+-----------------------------------------------------------------------
 
 local unmap = { "<leader>E", "<leader>bb" }
 for _, lhs in ipairs(unmap) do
   pcall(vim.keymap.del, "n", lhs)
 end
 
---INFO: New mappings
+-----------------------------------------------------------------------
+--  NEW mappings
+-----------------------------------------------------------------------
 
 vim.keymap.set("n", "<leader>e", function()
   require("snacks").explorer.open({ cwd = vim.fn.getcwd() })
@@ -31,7 +37,10 @@ vim.keymap.set("n", "<leader><leader>", "<cmd>e #<CR>", { desc = "Switch to prev
 vim.keymap.set("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 
---NOTE: My plugins
+-----------------------------------------------------------------------
+--  MY PLUGIN mappings
+-----------------------------------------------------------------------
+
 vim.keymap.set("n", "<leader>p", "<cmd>ProjectSelect<CR>", { desc = "Select Project (Snacks)" })
 
 vim.keymap.set("n", "<C-q>", function()

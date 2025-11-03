@@ -17,11 +17,4 @@ return {
       })
     end,
   },
-  {
-    name = "Layout",
-    dir = defaultDir .. "/layout",
-    config = function()
-      require("custom.layout").setup()
-    end,
-  },
 }

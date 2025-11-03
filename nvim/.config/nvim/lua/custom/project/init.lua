@@ -15,16 +15,39 @@ function M.setup(opts)
   M.opts = opts
 end
 
-function M.getPickerItems()
-  if M.currentProject then
-    return vim.tbl_filter(function(item)
-      return item.name ~= M.currentProject.name
-    end, M.opts.projects)
-  else
-    return M.opts.projects
-  end
+-----------------------------------------------------------------------
+-- 🔧 Helper: get modification time of a session file
+-----------------------------------------------------------------------
+local function get_session_mtime(name)
+  local session = M.sessionDir .. "/" .. name .. ".vim"
+  local stat = vim.loop.fs_stat(session)
+  return stat and stat.mtime.sec or 0
 end
 
+-----------------------------------------------------------------------
+-- 📋 Get list of projects, sorted by last saved time
+-----------------------------------------------------------------------
+function M.getPickerItems()
+  local items = M.opts.projects or {}
+
+  -- filter out current project if set
+  if M.currentProject then
+    items = vim.tbl_filter(function(item)
+      return item.name ~= M.currentProject.name
+    end, items)
+  end
+
+  -- sort by session modification time (descending)
+  table.sort(items, function(a, b)
+    return get_session_mtime(a.name) > get_session_mtime(b.name)
+  end)
+
+  return items
+end
+
+-----------------------------------------------------------------------
+-- 📦 Select and switch projects
+-----------------------------------------------------------------------
 function M.select()
   local snacks = require("snacks")
   local items = M.getPickerItems()
@@ -42,6 +65,19 @@ function M.select()
   end)
 end
 
+-----------------------------------------------------------------------
+-- 💾 Save session for current project
+-----------------------------------------------------------------------
+function M.saveSession(name)
+  vim.fn.mkdir(M.sessionDir, "p")
+  local session = M.sessionDir .. "/" .. name .. ".vim"
+  vim.cmd("mksession! " .. vim.fn.fnameescape(session))
+  vim.notify("💾 Saved session for " .. name, vim.log.levels.INFO, { title = "Project" })
+end
+
+-----------------------------------------------------------------------
+-- 🚪 Close all buffers
+-----------------------------------------------------------------------
 function M.close_all_buffers()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted then
@@ -50,27 +86,46 @@ function M.close_all_buffers()
   end
 end
 
-function M.saveSession(name)
-  vim.fn.mkdir(M.sessionDir, "p")
-  local session = M.sessionDir .. "/" .. name .. ".vim"
-  vim.cmd("mksession! " .. vim.fn.fnameescape(session))
-  vim.notify("💾 Saved session for " .. name, vim.log.levels.INFO, { title = "Project" })
-end
-
+-----------------------------------------------------------------------
+-- 🔁 Handle session switching and loading
+-----------------------------------------------------------------------
 function M.handleSession(name, dir)
   -- save current project before switching
   if M.currentProject then
     M.saveSession(M.currentProject.name)
   end
 
-  -- close all buffers
-  -- M.close_all_buffers()
+  ---------------------------------------------------------------------
+  -- ✅ Safely close all windows except one
+  ---------------------------------------------------------------------
+  local wins = vim.api.nvim_list_wins()
+  if #wins > 1 then
+    for _, win in ipairs(wins) do
+      if win ~= vim.api.nvim_get_current_win() then
+        pcall(vim.api.nvim_win_close, win, true)
+      end
+    end
+  end
 
+  ---------------------------------------------------------------------
+  -- ✅ Close all buffers (but keep one dummy buffer open)
+  ---------------------------------------------------------------------
+  vim.cmd("enew") -- create an empty scratch buffer
+  vim.cmd("only") -- make sure it’s the only window
+  M.close_all_buffers()
+
+  ---------------------------------------------------------------------
+  -- ✅ Change working directory to the new project
+  ---------------------------------------------------------------------
+  vim.fn.chdir(vim.fn.expand(dir))
+
+  ---------------------------------------------------------------------
+  -- ✅ Load or create the new session
+  ---------------------------------------------------------------------
   local session = M.sessionDir .. "/" .. name .. ".vim"
   if vim.fn.filereadable(session) == 1 then
     vim.cmd("silent! source " .. vim.fn.fnameescape(session))
   else
-    vim.fn.chdir(vim.fn.expand(dir))
     vim.cmd("mksession! " .. vim.fn.fnameescape(session))
   end
 
@@ -82,15 +137,26 @@ function M.handleSession(name, dir)
   M.currentProject = { name = name, dir = dir }
 end
 
+-----------------------------------------------------------------------
+-- 🧭 User commands
+-----------------------------------------------------------------------
 vim.api.nvim_create_user_command("ProjectSelect", function()
   M.select()
 end, { desc = "Select a project" })
 
 vim.api.nvim_create_user_command("ProjectSave", function()
+  if not M.currentProject then
+    vim.notify("No project currently active!", vim.log.levels.WARN, { title = "Project" })
+    return
+  end
   M.saveSession(M.currentProject.name)
 end, { desc = "Save a project" })
 
+-----------------------------------------------------------------------
+-- 📝 TODO
+-- - Save file tree state
+-- - Change tree directory if open
+-- - Buffer navigation improvements
+-----------------------------------------------------------------------
+
 return M
---TODO: Save file tree state
---TODO: Change tree directory if open
---TODO: Buffer navigate
