@@ -1,7 +1,2 @@
-require("core.options")
-require("core.keymaps")
-require("core.lazy")
-require("core.commands")
-
--- my plugins
--- require("plugins.custom.betterHarpoon")
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")

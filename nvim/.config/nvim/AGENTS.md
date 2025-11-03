@@ -1,0 +1,21 @@
+AGENTS Guide — LazyVim Neovim config
+
+- Purpose: Neovim config powered by LazyVim; entry `init.lua`, setup in `lua/config/lazy.lua`.
+- Format: `stylua .` (uses `stylua.toml`: 2 spaces, width 120).
+- Lint (optional): `luacheck lua` (not enforced; configure as needed).
+- Health: `nvim --headless "+Lazy! sync" +qa`; `nvim --headless "+checkhealth" +qa`.
+- Lua syntax: `luac -p $(git ls-files '*.lua')` to parse all files.
+- Tests: no suite configured; single-test not applicable. If added (plenary/busted), use `busted path/to/spec.lua -t "name"`.
+- Imports/modules: one module per file; `local M = {}; return M`; require via `require("...")`.
+- Plugin specs: place under `lua/plugins/*.lua`; return Lazy.nvim spec tables.
+- Config: keep user options/keymaps/autocmds in `lua/config/*` and project overrides in `lua/custom/*`.
+- Naming: snake_case for locals/functions; PascalCase module tables; UPPER_CASE constants.
+- Types/docs: use EmmyLua `---@param`, `---@return`, `---@type`; avoid globals.
+- Error handling: wrap optional `require` with `pcall`; report with `vim.notify(..., vim.log.levels.ERROR)`.
+- Neovim API: prefer `vim.opt`, `vim.keymap.set`, `vim.api.nvim_create_autocmd`; minimize `vim.cmd`.
+- Imports order: stdlib, then `vim.*`, then local modules; alphabetize within groups.
+- Tables: prefer trailing commas in multiline tables; keep shallow nesting.
+- Side effects: avoid on module load; expose functions and call from `init`/autocmds.
+- Commit style: imperative, concise, explain why (not just what).
+- Cursor/Copilot rules: none detected in repo.
+- PRs: keep changes minimal, match existing patterns and LazyVim conventions.
