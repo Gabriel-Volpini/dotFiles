@@ -44,5 +44,9 @@ config.colors = {
 config.window_background_opacity = 0.5
 config.macos_window_background_blur = 15
 
+config.set_environment_variables = {
+	WEZTERM_PANE = os.getenv("WEZTERM_PANE"),
+}
 -- and finally, return the configuration to wezterm
+
 return config

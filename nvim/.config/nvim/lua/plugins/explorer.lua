@@ -2,14 +2,19 @@ return {
   "folke/snacks.nvim",
   opts = {
     picker = {
-      sources = {
-        explorer = {
-          layout = {
-            layout = {
-              width = 60,
-            },
-          },
+      enabled = true,
+      layouts = {
+        default = {
+          layout = { width = 70 },
         },
+      },
+    },
+
+    -- 👇 add this block
+    explorer = {
+      enabled = true,
+      watch = {
+        enabled = false, -- hotfix: avoid vim.tbl_values(nil) in watch.lua
       },
     },
   },

@@ -112,7 +112,6 @@ function M.saveSession(name)
   vim.fn.mkdir(M.sessionDir, "p")
   local session = M.sessionDir .. "/" .. name .. ".vim"
   vim.cmd("mksession! " .. vim.fn.fnameescape(session))
-  vim.notify("💾 Saved session for " .. name, vim.log.levels.INFO, { title = "Project" })
 end
 
 -----------------------------------------------------------------------
