@@ -1,0 +1,13 @@
+-- local bufs = vim.api.nvim_list_bufs()
+--
+-- for _, buf in ipairs(bufs) do
+--   if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype == "snacks_terminal" then
+--     local currentBuf = vim.bo[buf]
+--     Utils.debug({ buf, currentBuf.filetype })
+--     --   -- Check if this is the most recently created terminal buffer
+--     --   local buf_name = vim.api.nvim_buf_get_name(buf)
+--     --   if buf_name:match("term://") then
+--     --     return buf
+--   end
+--   -- end
+-- end
