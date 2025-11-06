@@ -14,8 +14,6 @@ Refer to the [documentation](https://lazyvim.github.io/installation) to get star
   - Talvzs salvar as paradas em JSON ao inves do vim session
 - Criar um float terminal do opencode
   - Usar o Snack terminal ?
-  - remover o build agent
-  - criar um lua agent e um js agent
   - crirar um refactor agent
   - encontra uma forma melhor de passar o q foi selecionado (atualmente ele passa as linhas + o arquivo, tavlz passar o codigo selecionado em si)
 - configurar LINT
@@ -33,3 +31,11 @@ Refer to the [documentation](https://lazyvim.github.io/installation) to get star
 - olha o raycast no lugar do aerospace
 - fazer post no slack sobre as ferramentas de AI que ja testei
 - integracao todo memora nvim hehe
+
+---
+
+## OPENCODE
+
+- QWEN3 nao parece mt bom com lua
+  - oscilando entre js com lua
+  - codigos nao muito funcionais

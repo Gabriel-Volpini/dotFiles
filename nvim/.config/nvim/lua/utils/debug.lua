@@ -1,4 +1,4 @@
-function Debug(data)
+return function(data)
   local text = data and vim.inspect(data) or "nil"
 
   -- Create a scratch buffer
