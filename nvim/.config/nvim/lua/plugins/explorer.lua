@@ -1,3 +1,7 @@
+if true then
+  return {}
+end
+
 return {
   "folke/snacks.nvim",
   opts = {
@@ -5,7 +9,7 @@ return {
       enabled = true,
       layouts = {
         default = {
-          layout = { width = 70 },
+          layout = { width = 90 },
         },
       },
     },

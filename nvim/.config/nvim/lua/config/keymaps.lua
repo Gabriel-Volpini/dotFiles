@@ -24,10 +24,6 @@ end
 --  NEW mappings
 -----------------------------------------------------------------------
 
-vim.keymap.set("n", "<leader>e", function()
-  require("snacks").explorer.open()
-end, { desc = "File explorerfiles (Snacks)" })
-
 vim.keymap.set("n", "<leader>ff", function()
   require("snacks").picker.files({ cwd = vim.fn.getcwd() })
 end, { desc = "Find files (Snacks)" })

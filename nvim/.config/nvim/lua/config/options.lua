@@ -3,3 +3,5 @@
 -- Add any additional options here
 --
 vim.opt.splitkeep = "screen"
+
+vim.lsp.inlay_hint.enable(false, { bufnr = nil }) -- disables globally

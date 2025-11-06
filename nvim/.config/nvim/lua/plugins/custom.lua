@@ -14,6 +14,7 @@ return {
           { name = "Memora", dir = "~/Documents/private_repos/LifeApp/mobile/" },
           { name = "Settings", dir = "~/Documents/dotFiles/nvim/.config/nvim/" },
           { name = "Project sessions", dir = "/Users/gabrielvolpini/.local/share/nvim/project_sessions" },
+          { name = "Opencode agents", dir = "~/.config/opencode/agent/" },
         },
       })
     end,

@@ -74,4 +74,8 @@ vim.keymap.set("n", "<leader>tr", function()
   M.open_terminal_and_run()
 end)
 
+vim.keymap.set("n", "<leader>th", function()
+  M.toggleAll()
+end)
+
 return {}

@@ -141,7 +141,7 @@ function M.handleSession(name, dir)
     vim.cmd("mksession! " .. vim.fn.fnameescape(session))
   end
 
-  require("snacks").explorer.open()
+  -- require("snacks").explorer.open()
 
   vim.api.nvim_echo({
     { "Switched to ", "Normal" },
@@ -166,6 +166,9 @@ vim.api.nvim_create_user_command("ProjectSave", function()
   M.saveSession(M.currentProject.name)
 end, { desc = "Save a project" })
 
+vim.keymap.set("n", "<leader>e", function()
+  require("snacks").explorer.open({ cwd = M.currentProject.dir })
+end, { desc = "File explorerfiles (Snacks)" })
 -----------------------------------------------------------------------
 -- 📝 TODO
 -- - Save file tree state
