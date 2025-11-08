@@ -1,17 +1,4 @@
 -----------------------------------------------------------------------
---  DEBUG
------------------------------------------------------------------------
-vim.keymap.set("n", "<leader>r", function()
-  local file = vim.fn.expand("%:p")
-  if file:match("%.lua$") then
-    dofile(file)
-    vim.notify("✅ " .. vim.fn.fnamemodify(file, ":~") .. " executed", vim.log.levels.INFO, { title = "Lua Runner" })
-  else
-    vim.notify("⚠️ Not a Lua file!", vim.log.levels.WARN, { title = "Lua Runner" })
-  end
-end, { desc = "Run current Lua file" })
-
------------------------------------------------------------------------
 --  DELETING mappings
 -----------------------------------------------------------------------
 

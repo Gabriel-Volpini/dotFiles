@@ -11,3 +11,8 @@
 --   end
 --   -- end
 -- end
+--
+--
+
+-- Function to create a buffer with highlight group colors
+-- Function to create a buffer with highlight group colors and visual highlighting

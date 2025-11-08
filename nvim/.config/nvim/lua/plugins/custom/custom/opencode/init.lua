@@ -24,10 +24,10 @@ end
 
 function M.openFloatQuestion()
   local selection = Utils.get_visual_selection()
-  Utils.debug(selection)
-  if true then
-    return
-  end
+  -- Utils.debug(selection)
+  -- if true then
+  --   return
+  -- end
 
   vim.ui.input({
     prompt = "Ask opencode: ",
@@ -45,8 +45,6 @@ function M.openFloatQuestion()
       -- Escape special characters in selection for shell command
       local question = input .. '\n---\n"' .. selection
 
-      Utils.debug(question)
-
       M.toggleTerminal(question)
     end
   end)
@@ -57,6 +55,6 @@ vim.keymap.set({ "n", "t" }, "<C-t>", function()
 end, { desc = "Open opencode terminal (Snacks)" })
 
 vim.keymap.set({ "v", "x", "n" }, "<leader>ww", function()
-  -- M.openFloatQuestion()
-  Utils.debug(M.terminal)
+  M.openFloatQuestion()
+  -- Utils.debug(M.terminal)
 end, { desc = "Open opencode terminal (Snacks)" })
