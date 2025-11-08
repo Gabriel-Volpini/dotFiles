@@ -2,7 +2,12 @@ local M = {}
 
 function M.setup()
   ------------------------------------------------------------------
-  local projects = require("plugins.custom.custom.project")
+  local helpers = require("plugins.custom.modules.Helpers")
+  ------------------------------------------------------------------
+  vim.keymap.set("n", "<leader>r", helpers.run_and_show, { desc = "Run Lua file and display return value" })
+
+  ------------------------------------------------------------------
+  local projects = require("plugins.custom.modules.Projects")
   ------------------------------------------------------------------
   projects.setup({
     projects = {
@@ -17,14 +22,17 @@ function M.setup()
     },
   })
 
-  ------------------------------------------------------------------
-  local helpers = require("plugins.custom.modules.Helpers")
-  ------------------------------------------------------------------
-  vim.keymap.set("n", "<leader>r", helpers.run_and_show, { desc = "Run Lua file and display return value" })
+  vim.keymap.set("n", "<leader>p", "<cmd>ProjectSelect<CR>", { desc = "Select Project (Snacks)" })
+
+  vim.keymap.set("n", "<C-q>", function()
+    vim.cmd.ProjectSave()
+    vim.cmd.qa()
+  end, { desc = "Save project session and quit" })
 end
 
 return {
   name = "custom",
   dir = vim.fn.stdpath("config") .. "/lua/plugins/custom/",
+  lazy = true,
   config = M.setup(),
 }
