@@ -3,10 +3,9 @@
 ---@class OpenCodeSplit
 ---@field visible boolean
 ---@field bufnr number
----@field setup fun(opts: {ag:Agents}): nil
+---@field setup fun(opts: { ag:Agents, toggleKeyMap:string }): nil
 ---@field toggle fun(): nil
 local M = {}
-
 local splitRef
 
 local function createSplit()
@@ -34,28 +33,24 @@ local function createSplit()
   M.visible = false
 end
 
----@param ag Agents
-local function createOpenCodeTerminalInstance(ag)
-  vim.api.nvim_buf_call(splitRef.bufnr, function()
-    vim.fn.jobstart({ "zsh", "-c", "opencode --agent " .. ag }, {
-      term = true,
-      cwd = vim.fn.getcwd(),
-      on_exit = function()
-        splitRef:unmount()
-      end,
-    })
-  end)
+local function toggle()
+  if not M.visible then
+    splitRef:show()
+  else
+    splitRef:hide()
+  end
+  M.visible = not M.visible
 end
 
-local function createBasicKeymaps()
+local function createBasicKeymaps(toggleKeyMap)
   splitRef:map("t", "<esc><esc>", function()
     vim.cmd("stopinsert")
   end)
 
-  splitRef:map("n", "q", function()
-    splitRef:hide()
-    M.visible = false
-  end)
+  splitRef:map("n", "q", toggle)
+  splitRef:map("n", toggleKeyMap, toggle)
+  splitRef:map("t", toggleKeyMap, toggle)
+  vim.keymap.set({ "n", "i", "v" }, toggleKeyMap, toggle)
 
   splitRef:map("t", "<C-h>", "<C-\\><C-n><C-w>h")
   splitRef:map("t", "<C-j>", "<C-\\><C-n><C-w>j")
@@ -70,22 +65,33 @@ local function createAutoCommands()
   end)
 end
 
-function M.toggle()
-  Utils.debug(M.visible)
-  if M.visible then
-    -- splitRef:hide()
-  else
-    -- splitRef:show()
-  end
+---@param ag Agents
+local function createOpenCodeTerminalInstance(ag)
+  vim.api.nvim_buf_call(splitRef.bufnr, function()
+    vim.fn.jobstart({ "zsh", "-c", "opencode --agent " .. ag }, {
+      term = true,
+      cwd = vim.fn.getcwd(),
+      on_exit = function()
+        splitRef:unmount()
 
-  M.visible = not M.visible
+        M.setup(M.opts)
+      end,
+    })
+  end)
 end
 
 function M.setup(opts)
+  M.opts = opts
   createSplit()
-  createOpenCodeTerminalInstance(opts.ag)
-  createBasicKeymaps()
+  createBasicKeymaps(opts.toggleKeyMap)
   createAutoCommands()
+  createOpenCodeTerminalInstance(opts.ag)
 end
+
+M.setup({
+  ag = "Lua",
+  toggleKeyMap = "<C-t>",
+})
+toggle()
 
 return M

@@ -6,6 +6,7 @@ helpers.destroy_keymap({
     { "<leader>e", "Snack Explorer" },
     { "<leader>uh", "UI -  Inlay hints" },
     { "<leader>ul", "UI - Line numbers" },
+    { "<leader>ul", "UI - Line numbers" },
   },
 })
 
