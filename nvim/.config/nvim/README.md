@@ -10,6 +10,11 @@ Refer to the [documentation](https://lazyvim.github.io/installation) to get star
 
 ### TODO
 
+PRINCIPAL
+
+- TMUX LIKE SESSION MENAGER
+- TRANSPARENT TERMINAL + NEOVIM PREDETERMINED LAYOUT WITH NUI
+
 - Melhorar uso dos terminais
   - criar uma parada so para os testes q pode passar o arquivo atual (olhar Lazy extra test)
 - Melhorar a troca de projetos
