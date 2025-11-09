@@ -9,6 +9,20 @@ helpers.destroy_keymap({
   },
 })
 
+vim.keymap.set("n", "<leader>r", function()
+  helpers.run_and_show(false)
+end, { desc = "Run Lua file" })
+
+vim.keymap.set("n", "<leader>R", function()
+  helpers.run_and_show(true)
+end, { desc = "Run Lua file and display return value" })
+
+vim.keymap.set("x", "<leader>dr", function()
+  helpers.reload_plugin()
+end, { noremap = true, silent = true, desc = "Reset alreddy required files" })
+
+------------------------------------------------------------------
+
 vim.keymap.set("n", "<leader>ff", function()
   require("snacks").picker.files({ cwd = vim.fn.getcwd() })
 end, { desc = "Find files (Snacks)" })

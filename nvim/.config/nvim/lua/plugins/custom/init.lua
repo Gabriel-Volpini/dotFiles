@@ -2,11 +2,6 @@ local M = {}
 
 function M.setup()
   ------------------------------------------------------------------
-  local helpers = require("plugins.custom.modules.Helpers")
-  ------------------------------------------------------------------
-  vim.keymap.set("n", "<leader>r", helpers.run_and_show, { desc = "Run Lua file and display return value" })
-
-  ------------------------------------------------------------------
   local projects = require("plugins.custom.modules.Projects")
   ------------------------------------------------------------------
   projects.setup({

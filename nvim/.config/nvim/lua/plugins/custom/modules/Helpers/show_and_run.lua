@@ -1,4 +1,5 @@
-return function()
+---@param shouldOpenBuffer boolean
+return function(shouldOpenBuffer)
   local filepath = vim.fn.expand("%:p")
   if not filepath or filepath == "" then
     vim.notify("No file open", vim.log.levels.ERROR)
@@ -20,6 +21,11 @@ return function()
   else
     output = tostring(result)
   end
+
+  if not shouldOpenBuffer then
+    return
+  end
+
   -- Create a new buffer
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(output, "\n"))
