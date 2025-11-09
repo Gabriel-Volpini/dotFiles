@@ -2,9 +2,9 @@ local M = {}
 
 M.term = require("plugins.custom.modules.Projects.opencode.components.split_terminal")
 
-M.term.setup({
-  ag = "Lua",
-  toggleKeyMap = "<C-t>",
-})
+---@param opts OpencodeOPTS
+function M.setup(opts)
+  M.term.setup(opts)
+end
 
-return M.term.bufnr
+return M

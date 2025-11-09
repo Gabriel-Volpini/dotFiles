@@ -11,6 +11,13 @@ vim.fn.mkdir(M.sessionDir, "p")
 vim.o.sessionoptions = "buffers,curdir,tabpages,winsize,folds,help,globals,localoptions,terminal"
 
 function M.setup(opts)
+  local opencode = require("plugins.custom.modules.Projects.opencode")
+
+  --TODO: Implement correctly
+  opencode.setup({
+    ag = "Lua",
+    toggleKeyMap = "<C-t>",
+  })
   M.opts = opts or {}
 end
 

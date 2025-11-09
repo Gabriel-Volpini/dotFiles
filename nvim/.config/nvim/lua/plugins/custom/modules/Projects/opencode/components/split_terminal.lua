@@ -1,9 +1,10 @@
----@alias Agents "Lua" | "typescript"
+---@alias OpencodeAgents "Lua" | "typescript"
+---@alias OpencodeOPTS { ag:OpencodeAgents, toggleKeyMap:string }
 
 ---@class OpenCodeSplit
 ---@field visible boolean
 ---@field bufnr number
----@field setup fun(opts: { ag:Agents, toggleKeyMap:string }): nil
+---@field setup fun(opts: OpencodeOPTS): nil
 ---@field toggle fun(): nil
 local M = {}
 local splitRef
@@ -60,13 +61,18 @@ end
 
 local function createAutoCommands()
   local event = require("nui.utils.autocmd").event
+
   splitRef:on(event.BufEnter, function()
     vim.cmd("startinsert")
   end)
+
+  splitRef:on(event.VimLeave, function()
+    splitRef:unmount()
+  end)
 end
 
----@param ag Agents
-local function createOpenCodeTerminalInstance(ag)
+---@param ag OpencodeAgents
+local function createOpenCodeTerminalInstance(ag, opts)
   vim.api.nvim_buf_call(splitRef.bufnr, function()
     vim.fn.jobstart({ "zsh", "-c", "opencode --agent " .. ag }, {
       term = true,
@@ -74,24 +80,17 @@ local function createOpenCodeTerminalInstance(ag)
       on_exit = function()
         splitRef:unmount()
 
-        M.setup(M.opts)
+        M.setup(opts)
       end,
     })
   end)
 end
 
 function M.setup(opts)
-  M.opts = opts
   createSplit()
   createBasicKeymaps(opts.toggleKeyMap)
   createAutoCommands()
-  createOpenCodeTerminalInstance(opts.ag)
+  createOpenCodeTerminalInstance(opts.ag, opts)
 end
-
-M.setup({
-  ag = "Lua",
-  toggleKeyMap = "<C-t>",
-})
-toggle()
 
 return M
