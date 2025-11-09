@@ -56,6 +56,11 @@ local function createBasicKeymaps()
     splitRef:hide()
     M.visible = false
   end)
+
+  splitRef:map("t", "<C-h>", "<C-\\><C-n><C-w>h")
+  splitRef:map("t", "<C-j>", "<C-\\><C-n><C-w>j")
+  splitRef:map("t", "<C-k>", "<C-\\><C-n><C-w>k")
+  splitRef:map("t", "<C-l>", "<C-\\><C-n><C-w>l")
 end
 
 local function createAutoCommands()
@@ -66,10 +71,11 @@ local function createAutoCommands()
 end
 
 function M.toggle()
+  Utils.debug(M.visible)
   if M.visible then
-    splitRef:hide()
+    -- splitRef:hide()
   else
-    splitRef:show()
+    -- splitRef:show()
   end
 
   M.visible = not M.visible
