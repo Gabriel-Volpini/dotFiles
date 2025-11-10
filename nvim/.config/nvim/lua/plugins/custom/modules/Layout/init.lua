@@ -84,13 +84,13 @@ local Layout = require("nui.layout")
 local Popup = require("nui.popup")
 
 local left_popup = Popup({
-  border = { style = "rounded", text = { top = "Left" } },
+  border = { style = "rounded", text = { top = "CPU / Memory" } },
 })
 local left_popup1 = Popup({
-  border = { style = "rounded", text = { top = "Left" } },
+  border = { style = "rounded", text = { top = "Marks" } },
 })
 local left_popup2 = Popup({
-  border = { style = "rounded", text = { top = "Left" } },
+  border = { style = "rounded", text = { top = "Todo's" } },
 })
 
 local right_popup = Popup({
@@ -112,7 +112,11 @@ local hspacer = make_spacer(2, "100%")
 
 local leftBox = Layout.Box({
   Layout.Box(left_popup, {
-    size = { width = "100%", height = "33%" },
+    size = { width = "100%", height = "33%", border = {
+      padding = {
+        bottom = 10,
+      },
+    } },
   }),
   Layout.Box(make_spacer("100%", 1), { size = 1 }),
   Layout.Box(left_popup1, {
@@ -141,3 +145,28 @@ local layout = Layout(
 )
 
 layout:mount()
+
+local right = Split({
+  position = "right",
+  size = "20%",
+  relative = "editor",
+  enter = false,
+  win_options = {
+    cursorline = false,
+    number = false,
+    relativenumber = false,
+    signcolumn = "no",
+    foldcolumn = "0",
+  },
+  buf_options = {
+    modifiable = false,
+    readonly = true,
+  },
+})
+
+right:mount()
+right:map("n", "q", function()
+  right:unmount()
+end)
+
+M.apply_solid_bg(right.winid)
