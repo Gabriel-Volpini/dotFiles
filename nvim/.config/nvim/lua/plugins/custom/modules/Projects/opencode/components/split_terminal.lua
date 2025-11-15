@@ -1,5 +1,5 @@
 ---@alias OpencodeAgents "Lua" | "typescript"
----@alias OpencodeOPTS { ag:OpencodeAgents, toggleKeyMap:string }
+---@alias OpencodeOPTS { ag:OpencodeAgents, toggleKeyMap:string, visualSelectionKeyMap: string }
 
 ---@class OpenCodeSplit
 ---@field visible boolean
@@ -23,7 +23,7 @@ local function createSplit()
       list = false,
     },
     buf_options = {
-      filetype = "zsh",
+      filetype = "markdown",
     },
   })
 
@@ -66,15 +66,17 @@ local function createAutoCommands()
     vim.cmd("startinsert")
   end)
 
+  -- TODO: unecessary, justadd the terminal state into the project save
   splitRef:on(event.VimLeave, function()
     splitRef:unmount()
   end)
 end
 
+local job_id
 ---@param ag OpencodeAgents
 local function createOpenCodeTerminalInstance(ag, opts)
   vim.api.nvim_buf_call(splitRef.bufnr, function()
-    vim.fn.jobstart({ "zsh", "-c", "opencode --agent " .. ag }, {
+    job_id = vim.fn.jobstart({ "zsh", "-c", "opencode --agent " .. ag }, {
       term = true,
       cwd = vim.fn.getcwd(),
       on_exit = function()
@@ -86,11 +88,28 @@ local function createOpenCodeTerminalInstance(ag, opts)
   end)
 end
 
+local function createVisualInstanceHandler(keymap)
+  vim.keymap.set("v", keymap, function()
+    if not job_id then
+      return
+    end
+
+    vim.cmd('noautocmd normal! "vy')
+    local text = vim.fn.getreg("v")
+
+    vim.fn.chansend(job_id, text)
+
+    splitRef:show()
+    vim.cmd("startinsert")
+  end)
+end
+
 function M.setup(opts)
   createSplit()
   createBasicKeymaps(opts.toggleKeyMap)
   createAutoCommands()
   createOpenCodeTerminalInstance(opts.ag, opts)
+  createVisualInstanceHandler(opts.visualSelectionKeyMap)
 end
 
 return M
